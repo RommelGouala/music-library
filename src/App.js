@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AlbumView from "./Components/AlbumView";
+import ArtistView from "./Components/ArtistView";
 import Gallery from "./Components/Gallery";
 import SearchBar from "./Components/SearchBar";
+import { Fragment } from "react";
+
 
 function App() {
   // Search 
@@ -41,13 +46,23 @@ function App() {
     }
   
   }, [search])
-  return (
+    return (
     <div>
-      < SearchBar handleSearch={handleSearch} />
-      {message}
-      < Gallery data={data} />
+    {message}
+        <Router>
+            <Routes>
+                <Route path="/" element={
+                    <Fragment>
+                        <SearchBar handleSearch = {handleSearch}/>
+                        <Gallery data={data} />
+                    </Fragment>
+                } />
+                <Route path="/album/:id" element={<AlbumView />} />
+                <Route path="/artist/:id" element={<ArtistView />} />
+            </Routes>
+        </Router>
     </div>
-  );
+);
 }
 
 export default App;
